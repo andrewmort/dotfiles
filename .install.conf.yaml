@@ -1,0 +1,17 @@
+# Set defaults
+- defaults:
+   link:
+      create: true      # Create parent directory if necessary
+      relink: true      # Overwrite incorrect symbolic links
+
+# Clean dead symbolic links in ~/
+- clean: ['~']
+
+# Link files from this directory
+- link:
+   ~/.vimrc:
+   ~/.vim:
+
+# Execute shell commands
+- shell:
+   - [git submodule update --init --recursive, Installing submodules]

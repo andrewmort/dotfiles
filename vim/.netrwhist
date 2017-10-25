@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/proj/adate330/amort/adate330/verification/cosim/top/tests/busyb'
+let g:netrw_dirhist_2='/home/amort/.dotfiles/.git/refs'
+let g:netrw_dirhist_3='/home/amort/.dotfiles/.git/refs/heads'
