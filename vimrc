@@ -1,3 +1,36 @@
+" Set to not be vi compatible
+set nocompatible
+
+" -----------------------------------------------------------------------------
+" Use Vundle to manage plugins
+" -----------------------------------------------------------------------------
+
+" Required for Vundle
+filetype off
+
+" Set the runtime path to include Vundle
+set rtp+= ~/.vim/bundle/Vundle.vim 
+
+" Initialize Vundle
+call vundle#begin()  
+
+" All plugins should be added before this line
+call vundle#begin()  
+
+" Enable filetype plugin and indent support
+filetype plugin indent on
+
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins
+" :PluginUpdate     - update plugins
+" :PluginSearch foo - searches for foo
+" :PluginClean      - confirms removal of unused plugins
+
+" -----------------------------------------------------------------------------
+" Use Vundle to manage plugins
+" -----------------------------------------------------------------------------
+
 imap jk <esc>
 set ts=3
 set ai
