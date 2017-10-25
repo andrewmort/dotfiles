@@ -1,0 +1,16 @@
+base03='#002b36'  # TERMCOL=brblack
+base02='#073642'  # TERMCOL=black
+base01='#586e75'  # TERMCOL=brgreen
+base00='#657b83'  # TERMCOL=bryellow
+base0='#839496'   # TERMCOL=brblue
+base1='#93a1a1'   # TERMCOL=brcyan
+base2='#eee8d5'   # TERMCOL=white
+base3='#fdf6e3'   # TERMCOL=brwhite
+yellow='#b58900'  # TERMCOL=yellow
+orange='#cb4b16'  # TERMCOL=brred
+red='#dc322f'     # TERMCOL=red
+magenta='#d33682' # TERMCOL=magenta
+violet='#6c71c4'  # TERMCOL=brmagenta
+blue='#268bd2'    # TERMCOL=blue
+cyan='#2aa198'    # TERMCOL=cyan
+green='#859900'   # TERMCOL=green

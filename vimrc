@@ -1,31 +1,17 @@
-" Set to not be vi compatible
+" Use Vim settings, rather than Vi settings
 set nocompatible
 
 " -----------------------------------------------------------------------------
-" Use Vundle to manage plugins
+" Vundle Initialization
 " -----------------------------------------------------------------------------
 
-" Required for Vundle
-filetype off
+" Load plugins from ~/.vim/vundles.vim
+if filereadable(expand("~/.vim/vundles.vim"))
+   source ~/.vim/vundles.vim
+endif
 
-" Set the runtime path to include Vundle
-set rtp+= ~/.vim/bundle/Vundle.vim 
-
-" Initialize Vundle
-call vundle#begin()  
-
-" All plugins should be added before this line
-call vundle#begin()  
-
-" Enable filetype plugin and indent support
-filetype plugin indent on
-
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins
-" :PluginUpdate     - update plugins
-" :PluginSearch foo - searches for foo
-" :PluginClean      - confirms removal of unused plugins
+" Interpret .vundle files as vim filetype
+au BufNewFile,BufRead *.vundle set filetype=vim
 
 " -----------------------------------------------------------------------------
 " Use Vundle to manage plugins
@@ -47,8 +33,10 @@ set ruler
 syntax on
 au BufNewFile,BufRead *.v,*.vh,*.vt,*.sv set ft=verilog
 au BufNewFile,BufRead *.use,*.sim,*.mod,*.inc,*.ckt,*.subckt set ft=adice
-colorscheme desert
 set background=dark
+"colorscheme desert
+colorscheme solarized
+set t_Co=16
 
 " -----------------------------------------------------------------------------
 " moving around, searching, and patterns
