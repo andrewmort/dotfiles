@@ -2,16 +2,19 @@
 set nocompatible
 
 " -----------------------------------------------------------------------------
-" Vundle Initialization
+" Pathogen Initialization (Plugin Management)
 " -----------------------------------------------------------------------------
 
-" Load plugins from ~/.vim/vundles.vim
-if filereadable(expand("~/.vim/vundles.vim"))
-   source ~/.vim/vundles.vim
-endif
+" Add the pathogen plugin to the vim runtime
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+"source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
 
-" Interpret .vundle files as vim filetype
-au BufNewFile,BufRead *.vundle set filetype=vim
+" Start the pathogen plugin
+execute pathogen#infect()
+
+" TODO move this
+" Enable filetype plugin and indentation support
+filetype plugin indent on
 
 " -----------------------------------------------------------------------------
 " Use Vundle to manage plugins
@@ -35,7 +38,7 @@ au BufNewFile,BufRead *.v,*.vh,*.vt,*.sv set ft=verilog
 au BufNewFile,BufRead *.use,*.sim,*.mod,*.inc,*.ckt,*.subckt set ft=adice
 set background=dark
 "colorscheme desert
-colorscheme solarized
+"colorscheme solarized
 set t_Co=16
 
 " -----------------------------------------------------------------------------
