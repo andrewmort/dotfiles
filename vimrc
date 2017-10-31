@@ -34,7 +34,7 @@ set ruler
 " syntax, and colors
 " -----------------------------------------------------------------------------
 syntax on
-au BufNewFile,BufRead *.v,*.vh,*.vt,*.sv set ft=verilog
+au BufNewFile,BufRead *.vt set ft=verilog_systemverilog
 au BufNewFile,BufRead *.use,*.sim,*.mod,*.inc,*.ckt,*.subckt set ft=adice
 set background=dark
 "colorscheme desert
