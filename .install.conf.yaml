@@ -11,6 +11,7 @@
 - link:
    ~/.vimrc:
    ~/.vim:
+   ~/.dircolors: misc/dircolors-solarized/dircolors.ansi-dark
 
 # Execute shell commands
 - shell:
