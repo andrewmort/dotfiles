@@ -112,13 +112,27 @@ if type -t __git_ps1 &> /dev/null; then
    PS1="$PS1"'$(__git_ps1 "(%s)")'
 
    # Unstaged (*) and staged (+) changes will be shown next to branch name
-   export GIT_PS1_SHOWDIRTYSTATE=1
+   export GIT_PS1_SHOWDIRTYSTATE="yes"
 
    # Stashed ($) changes will be shown next to branch name
-   export GIT_PS1_SHOWSTASHSTATE=1
+   export GIT_PS1_SHOWSTASHSTATE="yes"
    
    # Untacked (%) changes will be shown next to branch name
-   export GIT_PS1_SHOWUNTRACKEDFILES=1
+   export GIT_PS1_SHOWUNTRACKEDFILES="yes"
+
+   # Modifies the way detached HEAD is shown
+   #  contains: looks forward in tree for tag
+   #  branch: looks forward in tree for a tag or branch
+   #  describe: looks backwards in tree for a tag
+   #  default: display tag you're exactly on, otherwise show commit id
+   export GIT_PS1_DESCRIBE_STYLE="contains"
+
+   # Shows the difference between server and local branch (git fetch)
+   #  <  behind    (need to pull changes from server)
+   #  >  ahead     (need to push changes to server)
+   #  <> divergent (some conflict resolution required)
+   #  =  identical (no action needed)
+   export GIT_PS1_SHOWUPSTREAM="auto"
 fi
 
 # Add prompt indicator
