@@ -57,6 +57,9 @@ alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
+alias cp="cp -i"
+alias mv="mv -i"
+
 alias ..="cd .."
 alias cd..="cd .."
 
@@ -109,7 +112,7 @@ PS1="${PS1}${COLOR_PATH}\W${COLOR_RESET}"
 
 # Add git branch and status if in git directory
 if type -t __git_ps1 &> /dev/null; then
-   PS1="$PS1"'$(__git_ps1 "(%s)")'
+   PS1="$PS1"'$(__git_ps1 " (%s)")'
 
    # Unstaged (*) and staged (+) changes will be shown next to branch name
    export GIT_PS1_SHOWDIRTYSTATE="yes"
