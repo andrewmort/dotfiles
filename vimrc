@@ -38,7 +38,7 @@ au BufNewFile,BufRead *.v,*.vh,*.vt,*.sv set ft=verilog
 au BufNewFile,BufRead *.use,*.sim,*.mod,*.inc,*.ckt,*.subckt set ft=adice
 set background=dark
 "colorscheme desert
-"colorscheme solarized
+colorscheme solarized
 set t_Co=16
 
 " -----------------------------------------------------------------------------
