@@ -15,5 +15,6 @@
 - link:
    ~/.vimrc:
    ~/.vim:
+   ~/.bashrc: 
    ~/.dircolors: misc/dircolors-solarized/dircolors.ansi-dark
 
