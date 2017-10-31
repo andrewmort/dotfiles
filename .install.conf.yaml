@@ -7,12 +7,13 @@
 # Clean dead symbolic links in ~/
 - clean: ['~']
 
+# Execute shell commands
+- shell:
+   - [git submodule update --init --recursive, Installing submodules]
+
 # Link files from this directory
 - link:
    ~/.vimrc:
    ~/.vim:
    ~/.dircolors: misc/dircolors-solarized/dircolors.ansi-dark
 
-# Execute shell commands
-- shell:
-   - [git submodule update --init --recursive, Installing submodules]
