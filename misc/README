@@ -1,0 +1,3 @@
+To allow gnome-terminal-colors-solarized to run in older versions of gnome,
+you must edit the file install.sh to remove the extra ":" when setting
+profile=$1 under the set_profile_colors() function.
