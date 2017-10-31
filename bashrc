@@ -95,11 +95,11 @@ COLOR_PROMPT=${COLOR_BLUE}
 PS1=""
 
 # Add time (24-hour, without seconds)
-PS1="${PS1}${COLOR_TIME}\A${COLOR_RESET}"
+PS1="${PS1}${COLOR_TIME}\A${COLOR_RESET} "
 
 # Add command return indicator (✔ if true, ✘ if false)
-TEMP="if [ \$? = 0 ]; then echo \"${COLOR_GREEN} ✔ \"; else echo \"${COLOR_RED} ✘ \"; fi"
-PS1="${PS1}\`${TEMP}\`${COLOR_RESET}"
+#TEMP="if [ \$? = 0 ]; then echo \"${COLOR_GREEN}✔ \"; else echo \"${COLOR_RED}✘ \"; fi"
+#PS1="${PS1}\`${TEMP}\`${COLOR_RESET}"
 
 # Add username@hostname
 PS1="${PS1}${COLOR_USER}\u@\h${COLOR_RESET}:"
@@ -107,12 +107,18 @@ PS1="${PS1}${COLOR_USER}\u@\h${COLOR_RESET}:"
 # Add current working path
 PS1="${PS1}${COLOR_PATH}\W${COLOR_RESET}"
 
-# Add git status if in git directory
+# Add git branch and status if in git directory
 if type -t __git_ps1 &> /dev/null; then
    PS1="$PS1"'$(__git_ps1 "(%s)")'
+
+   # Unstaged (*) and staged (+) changes will be shown next to branch name
    export GIT_PS1_SHOWDIRTYSTATE=1
+
+   # Stashed ($) changes will be shown next to branch name
    export GIT_PS1_SHOWSTASHSTATE=1
-   export GIT_PS1_SHOWUPSTREAM="auto"
+   
+   # Untacked (%) changes will be shown next to branch name
+   export GIT_PS1_SHOWUNTRACKEDFILES=1
 fi
 
 # Add prompt indicator
