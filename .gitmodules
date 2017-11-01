@@ -16,3 +16,6 @@
 [submodule "vim/bundle/verilog_systemverilog.vim"]
 	path = vim/bundle/verilog_systemverilog.vim
 	url = https://github.com/vhda/verilog_systemverilog.vim.git
+[submodule "vim/bundle/vim-adice"]
+	path = vim/bundle/vim-adice
+	url = git@github.com:andrewmort/vim-adice.git
