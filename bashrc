@@ -63,6 +63,14 @@ alias mv="mv -i"
 alias ..="cd .."
 alias cd..="cd .."
 
+# Add MVU aliases
+alias mvu='/cad/adi/cadlib/models/programs/mvu/mvu'
+alias mvum='/cad/adi/cadlib/models/programs/mvu/mvum'
+
+# Add adice setup aliases
+alias mksim='~/adice/current/programs/mksim.sh'
+alias cpsim='~/adice/current/programs/cpsim.sh'
+alias rsfailed='~/adice/current/programs/rsfailed.sh'
 
 
 # -----------------------------------------------------------------------------
