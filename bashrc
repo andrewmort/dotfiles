@@ -12,6 +12,17 @@
 export SHELL=/bin/bash
 
 # -----------------------------------------------------------------------------
+# Determine system we are running 
+# -----------------------------------------------------------------------------
+unameOut="$(uname -s)"
+case "$unameOut" in 
+   Linux*)  machine=Linux;;
+   Darwin*) machine=Mac;;
+   CYGWIN*) machine=Cygwin;;
+   *)       machine="UNKNOWN";;
+esac
+
+# -----------------------------------------------------------------------------
 # General settings
 # -----------------------------------------------------------------------------
 
@@ -24,8 +35,11 @@ shopt -s checkwinsize
 # Set shell colors to use Solarized theme if available
 # -----------------------------------------------------------------------------
 
-if [ -f ~/.dircolors ]; then
-   eval "$(dircolors ~/.dircolors)"
+# See if dircolors exists, then set dircolors
+if hash dircolors 2> /dev/null; then
+   if [ -f ~/.dircolors ]; then
+      eval "$(dircolors ~/.dircolors)"
+   fi
 fi
 
 force_color_prompt=yes
@@ -34,9 +48,11 @@ force_color_prompt=yes
 # Enable auto-completion for various commands
 # -----------------------------------------------------------------------------
 
-for file in /etc/bash_completion.d/* ; do
-   source "$file"
-done
+if [ -d /etc/bash_completion.d ]; then
+   for file in /etc/bash_completion.d/* ; do
+      source "$file"
+   done
+fi
 
 # -----------------------------------------------------------------------------
 # Set bash to append history
@@ -52,7 +68,12 @@ shopt -s histappend # append to history file
 # -----------------------------------------------------------------------------
 
 # Use color with common commands
-alias ls="ls --color=auto"
+if [ $machine=Mac ]; then
+   alias ls="ls -G"
+else
+   alias ls="ls --color=auto"
+fi
+
 alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
