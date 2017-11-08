@@ -25,8 +25,9 @@ if [ $machine == "mac" ]; then
       machine="brew"
 
       # Add brew coreutils to path to override bsd versions with OSX
-      PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-      MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+      PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+      MANPATH="$(brew --prefix coreutils)/libexec/gnuman:${MANPATH-usr/share/man}"
+      export MANPATH=$MANPATH
    fi
 fi
 
