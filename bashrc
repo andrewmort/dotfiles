@@ -39,6 +39,16 @@ fi
 # Ensure shell variable is updated with correct shell
 export SHELL=/bin/bash
 
+# -----------------------------------------------------------------------------
+# Set path
+# -----------------------------------------------------------------------------
+if [ -e /home/${USER}/bin ]; then
+   export PATH="/home/${USER}/bin:$PATH"
+fi
+
+if [ -e /home/${USER}/share/man ]; then
+   export MANPATH="/home/${USER}/share/man:${MANPATH}"
+fi
 
 # -----------------------------------------------------------------------------
 # General settings
