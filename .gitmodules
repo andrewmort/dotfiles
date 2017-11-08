@@ -19,3 +19,6 @@
 [submodule "vim/bundle/vim-adice"]
 	path = vim/bundle/vim-adice
 	url = git@github.com:andrewmort/vim-adice.git
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
+	url = https://github.com/majutsushi/tagbar.git
