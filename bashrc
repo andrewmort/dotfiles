@@ -7,20 +7,37 @@
 #
 # =============================================================================
 
+# -----------------------------------------------------------------------------
+# Determine system we are running 
+# -----------------------------------------------------------------------------
+
+unameOut="$(uname -s)"
+case "$unameOut" in 
+   Linux*)  machine="linux";;
+   Darwin*) machine="mac";;
+   CYGWIN*) machine="cygwin";;
+   *)       machine="UNKNOWN";;
+esac
+
+# If we have brew installed on mac, change system type
+if [ $machine == "mac" ]; then
+   if hash brew 2> /dev/null; then
+      machine="brew"
+
+      # Add brew coreutils to path to override bsd versions with OSX
+      PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+      MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+   fi
+fi
+
+
+# -----------------------------------------------------------------------------
+# SHELL is not always set, so do this
+# -----------------------------------------------------------------------------
 
 # Ensure shell variable is updated with correct shell
 export SHELL=/bin/bash
 
-# -----------------------------------------------------------------------------
-# Determine system we are running 
-# -----------------------------------------------------------------------------
-unameOut="$(uname -s)"
-case "$unameOut" in 
-   Linux*)  machine=Linux;;
-   Darwin*) machine=Mac;;
-   CYGWIN*) machine=Cygwin;;
-   *)       machine="UNKNOWN";;
-esac
 
 # -----------------------------------------------------------------------------
 # General settings
@@ -68,7 +85,7 @@ shopt -s histappend # append to history file
 # -----------------------------------------------------------------------------
 
 # Use color with common commands
-if [ $machine=Mac ]; then
+if [ $machine == "mac" ]; then
    alias ls="ls -G"
 else
    alias ls="ls --color=auto"
