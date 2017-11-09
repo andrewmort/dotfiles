@@ -1,0 +1,204 @@
+# =============================================================================
+#
+# File: $HOME/.cshrc.user
+# By Andrew Mort
+#
+# Last modified: 11/9/2017
+#
+# Try to make this similar to bashrc.
+#   (source this file in .cshrc)
+#
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 1. Determine system we are running 
+# -----------------------------------------------------------------------------
+
+
+set unameOut = `uname -s`
+switch ("$unameOut")
+  case "Linux*":  
+    set machine="linux"
+    breaksw
+  case "Darwin":
+    set machine="mac"
+    breaksw
+  case "CYGWIN":
+    set machine="cygwin";;
+    breaksw
+  default:
+    set machine="UNKOWN"
+    breaksw
+endsw
+
+# If we have brew installed on mac, change system type
+if ( $machine == "mac" ) then
+   if hash brew > /dev/null; then
+      set machine="brew"
+
+      # Add brew coreutils to path to override bsd versions with OSX
+      setenv PATH "`brew --prefix coreutils`/libexec/gnubin:${PATH}"
+      setenv MANPATH "`brew --prefix coreutils`/libexec/gnuman:${MANPATH}"
+   endif
+endif
+
+# -----------------------------------------------------------------------------
+# 2. Source additional .cshrc.local files in home directory
+# -----------------------------------------------------------------------------
+
+if (-e ${HOME}/.cshrc.local) then
+  source ${HOME}/.cshrc.local
+endif
+
+# -----------------------------------------------------------------------------
+# 3. Add ~/bin to path and ~/share to manpath
+# -----------------------------------------------------------------------------
+
+# Add local bin to path
+if ( -e /home/${USER}/bin ) then
+    setenv PATH /home/${USER}/bin:${PATH}
+endif
+
+if ( -e /home/${USER}/share/man ) then
+   setenv MANPATH /home/${USER}/share/man:${MANPATH}
+endif
+
+# -----------------------------------------------------------------------------
+# 4. General settings for all shells
+# -----------------------------------------------------------------------------
+
+# remove . from path
+setenv PATH `echo -n ${PATH} | awk -v RS=: -v ORS=: '$0 != "'.'"' | sed 's/:$//'`; 
+
+# set editor
+setenv EDITOR vim
+
+# -----------------------------------------------------------------------------
+# 5. Exit when not running interactively
+# -----------------------------------------------------------------------------
+
+if ($?USER == 0 || $?prompt == 0) exit
+
+# -----------------------------------------------------------------------------
+# 6. General settings
+# -----------------------------------------------------------------------------
+
+# ensure shell variable is updated with correct shell
+#setenv SHELL "/bin/tcsh"
+
+# set history length 
+set history=2000
+set savehist = 2000
+
+# Notify when job completes
+set notify           
+
+# No beep
+set nobeep           
+
+# Enable file completion
+set filec            
+
+# List choices when file completion fails
+set autolist         
+
+# Do not create core file
+limit coredumpsize 0 
+
+# -----------------------------------------------------------------------------
+# 7. Appearance setings
+# -----------------------------------------------------------------------------
+
+# see if dircolors exists
+which dircolors >& /dev/null
+
+# set dircolors (used in ls)
+if ($? == 0) then
+  if ( -e ~/.dircolors ) then
+    eval `dircolors -c ~/.dircolors`
+  endif
+endif
+
+# -----------------------------------------------------------------------------
+# 8. Enable auto-completion for various commands
+# -----------------------------------------------------------------------------
+
+# Not available for tcsh
+
+# -----------------------------------------------------------------------------
+# 9. Set alias
+# -----------------------------------------------------------------------------
+
+# use colors with ls
+if ( $machine == "mac" ) then
+   alias ls "ls -G"
+else
+   alias ls "ls --color=auto"
+endif
+
+# user colors with grep
+alias grep  "grep --color=auto"
+alias fgrep "fgrep --color=auto"
+alias egrep "egrep --color=auto"
+
+alias cp "cp -i"
+alias mv "mv -i"
+
+alias ..   "cd .."
+alias cd.. "cd .."
+
+# find file in current directory or subdirectories (eg. ff '*.txt')
+alias ff 'find . -name \!* -print'
+
+
+# -----------------------------------------------------------------------------
+# 10. Set prompt
+# -----------------------------------------------------------------------------
+
+echo "10"
+
+# define solarized colors
+set COLOR_BASE03='\[\e[01;30m\]'
+set COLOR_BASE02='\[\e[00;30m\]'
+set COLOR_BASE01='\[\e[01;32m\]'
+set COLOR_BASE00='\[\e[01;33m\]'
+set COLOR_BASE0='\[\e[01;34m\]'
+set COLOR_BASE1='\[\e[01;36m\]'
+set COLOR_BASE2='\[\e[00;37m\]'
+set COLOR_BASE3='\[\e[01;37m\]'
+set COLOR_YELLOW='\[\e[00;33m\]'
+set COLOR_ORANGE='\[\e[01;31m\]'
+set COLOR_RED='\[\e[00;31m\]'
+set COLOR_MAGENTA='\[\e[00;35m\]'
+set COLOR_VIOLET='\[\e[01;35m\]'
+set COLOR_BLUE='\[\e[00;34m\]'
+set COLOR_CYAN='\[\e[00;36m\]'
+set COLOR_GREEN='\[\e[00;32m\]'
+
+# define prompt color usage
+set COLOR_RESET=${COLOR_BASE0}
+set COLOR_TIME=${COLOR_BASE01}
+set COLOR_USER=${COLOR_BASE0}
+set COLOR_PATH=${COLOR_BASE1}
+set COLOR_PROMPT=${COLOR_BLUE}
+
+# clear settings
+set PROMPT ""
+
+# add time (24-hour, without seconds)
+set PROMPT "${PROMPT}${COLOR_TIME}\A${COLOR_RESET} "
+
+# add command return indicator (✔ if true, ✘ if false)
+#set TEMP "if [ \$? = 0 ]; then echo \"${COLOR_GREEN}✔ \"; else echo \"${COLOR_RED}✘ \"; fi"
+#set PROMPT "${PROMPT}\`${TEMP}\`${COLOR_RESET}"
+
+# add username@hostname
+set PROMPT "${PROMPT}${COLOR_USER}\u@\h${COLOR_RESET}:"
+
+# add current working path
+set PROMPT "${PROMPT}${COLOR_PATH}\W${COLOR_RESET}"
+
+# add prompt indicator
+set PROMPT "${PROMPT}${COLOR_PROMPT}>${COLOR_RESET} " 
+
+

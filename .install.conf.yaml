@@ -13,8 +13,12 @@
 
 # Link files from this directory
 - link:
-   ~/.vimrc:
-   ~/.vim:
-   ~/.bashrc: 
-   ~/.dircolors: misc/dircolors-solarized/dircolors.ansi-dark
+    ~/.vimrc:
+    ~/.vim:
+    ~/.bashrc: 
+    ~/.bashrc.user:
+    ~/.cshrc: 
+    ~/.cshrc.user:
+    ~/.dircolors: misc/dircolors-solarized/dircolors.ansi-dark
+
 

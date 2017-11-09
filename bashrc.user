@@ -1,0 +1,209 @@
+# =============================================================================
+#
+# File: $HOME/.bashrc.user
+# By Andrew Mort
+#
+# Last modified: 10/31/2017
+#
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 1. Determine system we are running 
+# -----------------------------------------------------------------------------
+
+unameOut="$(uname -s)"
+case "$unameOut" in 
+   Linux*)  machine="linux";;
+   Darwin*) machine="mac";;
+   CYGWIN*) machine="cygwin";;
+   *)       machine="UNKNOWN";;
+esac
+
+# if we have brew installed on mac, change system type
+if [ $machine == "mac" ]; then
+   if hash brew 2> /dev/null; then
+      machine="brew"
+
+      # Add brew coreutils to path to override bsd versions with OSX
+      PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+      MANPATH="$(brew --prefix coreutils)/libexec/gnuman:${MANPATH-usr/share/man}"
+      export MANPATH=$MANPATH
+   fi
+fi
+
+# -----------------------------------------------------------------------------
+# 2. Source any additional .bashrc.* files in home directory
+# -----------------------------------------------------------------------------
+
+if [ -e ${HOME}/.bashrc.local ]; then
+  source ${HOME}/.bashrc.local
+fi
+
+# -----------------------------------------------------------------------------
+# 3. Add ~/bin to path and ~/share to manpath
+# -----------------------------------------------------------------------------
+
+if [ -e /home/${USER}/bin ]; then
+   export PATH="/home/${USER}/bin:$PATH"
+fi
+
+if [ -e /home/${USER}/share/man ]; then
+   export MANPATH="/home/${USER}/share/man:${MANPATH}"
+fi
+
+# -----------------------------------------------------------------------------
+# 4. General settings for all shells
+# -----------------------------------------------------------------------------
+
+export EDITOR=vim
+
+# -----------------------------------------------------------------------------
+# 5. Exit when not running interactively
+# -----------------------------------------------------------------------------
+
+[ -z "$PS1" ] && return
+
+# -----------------------------------------------------------------------------
+# 6. General settings
+# -----------------------------------------------------------------------------
+
+# ensure shell variable is updated with correct shell
+#export SHELL=/bin/bash
+
+# set history length 
+HISTSIZE=2000
+SAVEHIST=$HISTSIZE
+
+# set history file
+HISTFILE="$HOME/.bash_history"
+
+# append to history
+shopt -s histappend 
+
+# -----------------------------------------------------------------------------
+# 7. Appearance setings
+# -----------------------------------------------------------------------------
+
+# force bash to check for window size (prevent weird line wrapping)
+shopt -s checkwinsize
+
+# see if dircolors exists, then set dircolors (used in ls)
+if hash dircolors 2> /dev/null; then
+   if [ -f ~/.dircolors ]; then
+      eval "$(dircolors ~/.dircolors)"
+   fi
+fi
+
+force_color_prompt=yes
+
+# -----------------------------------------------------------------------------
+# 8. Enable auto-completion for various commands
+# -----------------------------------------------------------------------------
+
+if [ -d /etc/bash_completion.d ]; then
+   for file in /etc/bash_completion.d/* ; do
+      source "$file"
+   done
+fi
+
+# -----------------------------------------------------------------------------
+# 9. Set alias
+# -----------------------------------------------------------------------------
+
+# use colors with ls
+if [ $machine == "mac" ]; then
+   alias ls="ls -G"
+else
+   alias ls="ls --color=auto"
+fi
+
+# user colors with grep
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+
+alias cp="cp -i"
+alias mv="mv -i"
+
+alias ..="cd .."
+alias cd..="cd .."
+
+# find file in current directory or subdirectories (eg. ff '*.txt')
+alias ff='find . -name \!* -print'
+
+# -----------------------------------------------------------------------------
+# 10. Set prompt
+# -----------------------------------------------------------------------------
+
+# define solarized colors
+COLOR_BASE03='\[\e[01;30m\]'
+COLOR_BASE02='\[\e[00;30m\]'
+COLOR_BASE01='\[\e[01;32m\]'
+COLOR_BASE00='\[\e[01;33m\]'
+COLOR_BASE0='\[\e[01;34m\]'
+COLOR_BASE1='\[\e[01;36m\]'
+COLOR_BASE2='\[\e[00;37m\]'
+COLOR_BASE3='\[\e[01;37m\]'
+COLOR_YELLOW='\[\e[00;33m\]'
+COLOR_ORANGE='\[\e[01;31m\]'
+COLOR_RED='\[\e[00;31m\]'
+COLOR_MAGENTA='\[\e[00;35m\]'
+COLOR_VIOLET='\[\e[01;35m\]'
+COLOR_BLUE='\[\e[00;34m\]'
+COLOR_CYAN='\[\e[00;36m\]'
+COLOR_GREEN='\[\e[00;32m\]'
+
+# define prompt color usage
+COLOR_RESET=${COLOR_BASE0}
+COLOR_TIME=${COLOR_BASE01}
+COLOR_USER=${COLOR_BASE0}
+COLOR_PATH=${COLOR_BASE1}
+COLOR_PROMPT=${COLOR_BLUE}
+
+# clear settings
+PS1=""
+
+# add time (24-hour, without seconds)
+PS1="${PS1}${COLOR_TIME}\A${COLOR_RESET} "
+
+# add command return indicator (✔ if true, ✘ if false)
+#TEMP="if [ \$? = 0 ]; then echo \"${COLOR_GREEN}✔ \"; else echo \"${COLOR_RED}✘ \"; fi"
+#PS1="${PS1}\`${TEMP}\`${COLOR_RESET}"
+
+# add username@hostname
+PS1="${PS1}${COLOR_USER}\u@\h${COLOR_RESET}:"
+
+# add current working path
+PS1="${PS1}${COLOR_PATH}\W${COLOR_RESET}"
+
+# add git branch and status if in git directory
+if type -t __git_ps1 &> /dev/null; then
+   PS1="$PS1"'$(__git_ps1 " (%s)")'
+
+   # unstaged (*) and staged (+) changes will be shown next to branch name
+   export GIT_PS1_SHOWDIRTYSTATE="yes"
+
+   # stashed ($) changes will be shown next to branch name
+   export GIT_PS1_SHOWSTASHSTATE="yes"
+   
+   # untacked (%) changes will be shown next to branch name
+   export GIT_PS1_SHOWUNTRACKEDFILES="yes"
+
+   # modifies the way detached HEAD is shown
+   #  contains: looks forward in tree for tag
+   #  branch: looks forward in tree for a tag or branch
+   #  describe: looks backwards in tree for a tag
+   #  default: display tag you're exactly on, otherwise show commit id
+   export GIT_PS1_DESCRIBE_STYLE="contains"
+
+   # shows the difference between server and local branch (git fetch)
+   #  <  behind    (need to pull changes from server)
+   #  >  ahead     (need to push changes to server)
+   #  <> divergent (some conflict resolution required)
+   #  =  identical (no action needed)
+   export GIT_PS1_SHOWUPSTREAM="auto"
+fi
+
+# add prompt indicator
+PS1="${PS1}${COLOR_PROMPT}>${COLOR_RESET} " 
+
