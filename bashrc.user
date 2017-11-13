@@ -7,9 +7,17 @@
 #
 # =============================================================================
 
+# Set to 1 to print debug numbers
+DEBUG_RC=0
+
 # -----------------------------------------------------------------------------
 # 1. Determine system we are running 
 # -----------------------------------------------------------------------------
+
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
 
 unameOut="$(uname -s)"
 case "$unameOut" in 
@@ -35,6 +43,11 @@ fi
 # 2. Source any additional .bashrc.* files in home directory
 # -----------------------------------------------------------------------------
 
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
+
 if [ -e ${HOME}/.bashrc.local ]; then
   source ${HOME}/.bashrc.local
 fi
@@ -42,6 +55,11 @@ fi
 # -----------------------------------------------------------------------------
 # 3. Add ~/bin to path and ~/share to manpath
 # -----------------------------------------------------------------------------
+
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
 
 if [ -e /home/${USER}/bin ]; then
    export PATH="/home/${USER}/bin:$PATH"
@@ -55,17 +73,32 @@ fi
 # 4. General settings for all shells
 # -----------------------------------------------------------------------------
 
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
+
 export EDITOR=vim
 
 # -----------------------------------------------------------------------------
 # 5. Exit when not running interactively
 # -----------------------------------------------------------------------------
 
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
+
 [ -z "$PS1" ] && return
 
 # -----------------------------------------------------------------------------
 # 6. General settings
 # -----------------------------------------------------------------------------
+
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
 
 # ensure shell variable is updated with correct shell
 #export SHELL=/bin/bash
@@ -84,13 +117,18 @@ shopt -s histappend
 # 7. Appearance setings
 # -----------------------------------------------------------------------------
 
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
+
 # force bash to check for window size (prevent weird line wrapping)
 shopt -s checkwinsize
 
 # see if dircolors exists, then set dircolors (used in ls)
 if hash dircolors 2> /dev/null; then
    if [ -f ~/.dircolors ]; then
-      eval "$(dircolors ~/.dircolors)"
+      eval "$(dircolors -b ~/.dircolors)"
    fi
 fi
 
@@ -99,6 +137,11 @@ force_color_prompt=yes
 # -----------------------------------------------------------------------------
 # 8. Enable auto-completion for various commands
 # -----------------------------------------------------------------------------
+
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
 
 if [ -d /etc/bash_completion.d ]; then
    for file in /etc/bash_completion.d/* ; do
@@ -109,6 +152,11 @@ fi
 # -----------------------------------------------------------------------------
 # 9. Set alias
 # -----------------------------------------------------------------------------
+
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
 
 # use colors with ls
 if [ $machine == "mac" ]; then
@@ -135,27 +183,33 @@ alias ff='find . -name \!* -print'
 # 10. Set prompt
 # -----------------------------------------------------------------------------
 
+if [ $DEBUG_RC -gt 0 ]; then
+  echo $DEBUG_RC
+  DEBUG_RC=$(($DEBUG_RC + 1))
+fi
+
 # define solarized colors
-COLOR_BASE03='\[\e[01;30m\]'
-COLOR_BASE02='\[\e[00;30m\]'
-COLOR_BASE01='\[\e[01;32m\]'
-COLOR_BASE00='\[\e[01;33m\]'
-COLOR_BASE0='\[\e[01;34m\]'
-COLOR_BASE1='\[\e[01;36m\]'
-COLOR_BASE2='\[\e[00;37m\]'
-COLOR_BASE3='\[\e[01;37m\]'
-COLOR_YELLOW='\[\e[00;33m\]'
-COLOR_ORANGE='\[\e[01;31m\]'
-COLOR_RED='\[\e[00;31m\]'
-COLOR_MAGENTA='\[\e[00;35m\]'
-COLOR_VIOLET='\[\e[01;35m\]'
-COLOR_BLUE='\[\e[00;34m\]'
-COLOR_CYAN='\[\e[00;36m\]'
-COLOR_GREEN='\[\e[00;32m\]'
+ COLOR_BASE03='\[\e[01;30m\]'   # brblack
+ COLOR_BASE02='\[\e[00;30m\]'   # black
+ COLOR_BASE01='\[\e[01;32m\]'   # brgreen
+ COLOR_BASE00='\[\e[01;33m\]'   # bryellow
+  COLOR_BASE0='\[\e[01;34m\]'   # brblue
+  COLOR_BASE1='\[\e[01;36m\]'   # brcyan
+  COLOR_BASE2='\[\e[00;37m\]'   # white
+  COLOR_BASE3='\[\e[01;37m\]'   # brwhite
+ COLOR_YELLOW='\[\e[00;33m\]'   # yellow
+ COLOR_ORANGE='\[\e[01;31m\]'   # brred
+    COLOR_RED='\[\e[00;31m\]'   # red
+COLOR_MAGENTA='\[\e[00;35m\]'   # magenta
+ COLOR_VIOLET='\[\e[01;35m\]'   # brmagenta
+   COLOR_BLUE='\[\e[00;34m\]'   # blue
+   COLOR_CYAN='\[\e[00;36m\]'   # cyan
+  COLOR_GREEN='\[\e[00;32m\]'   # green
+    COLOR_END='\[\e[00m\]'   
 
 # define prompt color usage
-COLOR_RESET=${COLOR_BASE0}
 COLOR_TIME=${COLOR_BASE01}
+COLOR_SHELL=${COLOR_ORANGE}
 COLOR_USER=${COLOR_BASE0}
 COLOR_PATH=${COLOR_BASE1}
 COLOR_PROMPT=${COLOR_BLUE}
@@ -164,17 +218,20 @@ COLOR_PROMPT=${COLOR_BLUE}
 PS1=""
 
 # add time (24-hour, without seconds)
-PS1="${PS1}${COLOR_TIME}\A${COLOR_RESET} "
+PS1="${PS1}${COLOR_TIME}\A${COLOR_END} "
 
 # add command return indicator (✔ if true, ✘ if false)
-#TEMP="if [ \$? = 0 ]; then echo \"${COLOR_GREEN}✔ \"; else echo \"${COLOR_RED}✘ \"; fi"
-#PS1="${PS1}\`${TEMP}\`${COLOR_RESET}"
+TEMP="if [ \$? = 0 ]; then echo \"${COLOR_GREEN}✔ \"; else echo \"${COLOR_RED}✘ \"; fi"
+PS1="${PS1}\`${TEMP}\`${COLOR_END}"
+
+# add shell name
+PS1="${PS1}${COLOR_SHELL}(bash)${COLOR_END} "
 
 # add username@hostname
-PS1="${PS1}${COLOR_USER}\u@\h${COLOR_RESET}:"
+PS1="${PS1}${COLOR_USER}\u@\h${COLOR_END}:"
 
 # add current working path
-PS1="${PS1}${COLOR_PATH}\W${COLOR_RESET}"
+PS1="${PS1}${COLOR_PATH}\W${COLOR_END}"
 
 # add git branch and status if in git directory
 if type -t __git_ps1 &> /dev/null; then
@@ -205,5 +262,34 @@ if type -t __git_ps1 &> /dev/null; then
 fi
 
 # add prompt indicator
-PS1="${PS1}${COLOR_PROMPT}>${COLOR_RESET} " 
+PS1="${PS1}${COLOR_PROMPT}>${COLOR_END} " 
 
+# -----------------------------------------------------------------------------
+# Cleanup Variables
+# -----------------------------------------------------------------------------
+
+unset DEBUG_RC
+
+unset COLOR_BASE03
+unset COLOR_BASE02
+unset COLOR_BASE01
+unset COLOR_BASE00
+unset COLOR_BASE0
+unset COLOR_BASE1
+unset COLOR_BASE2
+unset COLOR_BASE3
+unset COLOR_YELLOW
+unset COLOR_ORANGE
+unset COLOR_RED
+unset COLOR_MAGENTA
+unset COLOR_VIOLET
+unset COLOR_BLUE
+unset COLOR_CYAN
+unset COLOR_GREEN
+unset COLOR_END
+
+unset COLOR_RESET
+unset COLOR_TIME
+unset COLOR_USER
+unset COLOR_PATH
+unset COLOR_PROMPT

@@ -10,10 +10,17 @@
 #
 # =============================================================================
 
+# Set to 1 to print debug numbers
+set DEBUG_RC=0
+
 # -----------------------------------------------------------------------------
 # 1. Determine system we are running 
 # -----------------------------------------------------------------------------
 
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
 
 set unameOut = `uname -s`
 switch ("$unameOut")
@@ -46,6 +53,11 @@ endif
 # 2. Source additional .cshrc.local files in home directory
 # -----------------------------------------------------------------------------
 
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
+
 if (-e ${HOME}/.cshrc.local) then
   source ${HOME}/.cshrc.local
 endif
@@ -53,6 +65,11 @@ endif
 # -----------------------------------------------------------------------------
 # 3. Add ~/bin to path and ~/share to manpath
 # -----------------------------------------------------------------------------
+
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
 
 # Add local bin to path
 if ( -e /home/${USER}/bin ) then
@@ -67,6 +84,11 @@ endif
 # 4. General settings for all shells
 # -----------------------------------------------------------------------------
 
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
+
 # remove . from path
 setenv PATH `echo -n ${PATH} | awk -v RS=: -v ORS=: '$0 != "'.'"' | sed 's/:$//'`; 
 
@@ -77,11 +99,21 @@ setenv EDITOR vim
 # 5. Exit when not running interactively
 # -----------------------------------------------------------------------------
 
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
+
 if ($?USER == 0 || $?prompt == 0) exit
 
 # -----------------------------------------------------------------------------
 # 6. General settings
 # -----------------------------------------------------------------------------
+
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
 
 # ensure shell variable is updated with correct shell
 #setenv SHELL "/bin/tcsh"
@@ -109,6 +141,11 @@ limit coredumpsize 0
 # 7. Appearance setings
 # -----------------------------------------------------------------------------
 
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
+
 # see if dircolors exists
 which dircolors >& /dev/null
 
@@ -123,11 +160,21 @@ endif
 # 8. Enable auto-completion for various commands
 # -----------------------------------------------------------------------------
 
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
+
 # Not available for tcsh
 
 # -----------------------------------------------------------------------------
 # 9. Set alias
 # -----------------------------------------------------------------------------
+
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
 
 # use colors with ls
 if ( $machine == "mac" ) then
@@ -155,50 +202,86 @@ alias ff 'find . -name \!* -print'
 # 10. Set prompt
 # -----------------------------------------------------------------------------
 
-echo "10"
+if ( $DEBUG_RC > 0 ) then
+  echo $DEBUG_RC
+  set DEBUG_RC = `expr $DEBUG_RC + 1`
+endif
 
 # define solarized colors
-set COLOR_BASE03='\[\e[01;30m\]'
-set COLOR_BASE02='\[\e[00;30m\]'
-set COLOR_BASE01='\[\e[01;32m\]'
-set COLOR_BASE00='\[\e[01;33m\]'
-set COLOR_BASE0='\[\e[01;34m\]'
-set COLOR_BASE1='\[\e[01;36m\]'
-set COLOR_BASE2='\[\e[00;37m\]'
-set COLOR_BASE3='\[\e[01;37m\]'
-set COLOR_YELLOW='\[\e[00;33m\]'
-set COLOR_ORANGE='\[\e[01;31m\]'
-set COLOR_RED='\[\e[00;31m\]'
-set COLOR_MAGENTA='\[\e[00;35m\]'
-set COLOR_VIOLET='\[\e[01;35m\]'
-set COLOR_BLUE='\[\e[00;34m\]'
-set COLOR_CYAN='\[\e[00;36m\]'
-set COLOR_GREEN='\[\e[00;32m\]'
+set  COLOR_BASE03="%{\033[1;30m%}"   # brblack
+set  COLOR_BASE02="%{\033[0;30m%}"   # black
+set  COLOR_BASE01="%{\033[1;32m%}"   # brgreen
+set  COLOR_BASE00="%{\033[1;33m%}"   # bryellow
+set   COLOR_BASE0="%{\033[1;34m%}"   # brblue
+set   COLOR_BASE1="%{\033[1;36m%}"   # brcyan
+set   COLOR_BASE2="%{\033[0;37m%}"   # white
+set   COLOR_BASE3="%{\033[1;37m%}"   # brwhite
+set  COLOR_YELLOW="%{\033[0;33m%}"   # yellow
+set  COLOR_ORANGE="%{\033[1;31m%}"   # brred
+set     COLOR_RED="%{\033[0;31m%}"   # red
+set COLOR_MAGENTA="%{\033[0;35m%}"   # magenta
+set  COLOR_VIOLET="%{\033[1;35m%}"   # brmagenta
+set    COLOR_BLUE="%{\033[0;34m%}"   # blue
+set    COLOR_CYAN="%{\033[0;36m%}"   # cyan
+set   COLOR_GREEN="%{\033[0;32m%}"   # green
+set     COLOR_END="%{\033[0m%}"
 
 # define prompt color usage
-set COLOR_RESET=${COLOR_BASE0}
-set COLOR_TIME=${COLOR_BASE01}
-set COLOR_USER=${COLOR_BASE0}
-set COLOR_PATH=${COLOR_BASE1}
-set COLOR_PROMPT=${COLOR_BLUE}
+set   COLOR_TIME="${COLOR_BASE01}"
+set  COLOR_SHELL="${COLOR_VIOLET}"
+set   COLOR_USER="${COLOR_BASE0}"
+set   COLOR_PATH="${COLOR_BASE1}"
+set COLOR_PROMPT="${COLOR_BLUE}"
+
 
 # clear settings
-set PROMPT ""
+set PROMPT=""
 
 # add time (24-hour, without seconds)
-set PROMPT "${PROMPT}${COLOR_TIME}\A${COLOR_RESET} "
+set PROMPT="${PROMPT}${COLOR_TIME}%T${COLOR_END} "
 
-# add command return indicator (✔ if true, ✘ if false)
-#set TEMP "if [ \$? = 0 ]; then echo \"${COLOR_GREEN}✔ \"; else echo \"${COLOR_RED}✘ \"; fi"
-#set PROMPT "${PROMPT}\`${TEMP}\`${COLOR_RESET}"
+# add shell name
+set PROMPT="${PROMPT}${COLOR_SHELL}(csh)${COLOR_END} "
 
 # add username@hostname
-set PROMPT "${PROMPT}${COLOR_USER}\u@\h${COLOR_RESET}:"
+set PROMPT="${PROMPT}${COLOR_USER}%n@%m${COLOR_END}:"
 
 # add current working path
-set PROMPT "${PROMPT}${COLOR_PATH}\W${COLOR_RESET}"
+set PROMPT="${PROMPT}${COLOR_PATH}%c${COLOR_END}"
 
 # add prompt indicator
-set PROMPT "${PROMPT}${COLOR_PROMPT}>${COLOR_RESET} " 
+set PROMPT="${PROMPT}${COLOR_PROMPT}>${COLOR_END} " 
 
+set prompt="$PROMPT"
 
+# -----------------------------------------------------------------------------
+# Cleanup Variables
+# -----------------------------------------------------------------------------
+
+unset DEBUG_RC
+
+unset COLOR_BASE03
+unset COLOR_BASE02
+unset COLOR_BASE01
+unset COLOR_BASE00
+unset COLOR_BASE0
+unset COLOR_BASE1
+unset COLOR_BASE2
+unset COLOR_BASE3
+unset COLOR_YELLOW
+unset COLOR_ORANGE
+unset COLOR_RED
+unset COLOR_MAGENTA
+unset COLOR_VIOLET
+unset COLOR_BLUE
+unset COLOR_CYAN
+unset COLOR_GREEN
+unset COLOR_END
+
+unset COLOR_RESET
+unset COLOR_TIME
+unset COLOR_USER
+unset COLOR_PATH
+unset COLOR_PROMPT
+
+unset PROMPT 
