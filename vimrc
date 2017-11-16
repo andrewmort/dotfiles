@@ -1,6 +1,9 @@
 " -----------------------------------------------------------------------------
 "  File: .vimrc
 "  Author: Andrew Mort (andrewnmort@gmail.com)
+"
+"  TODO Delete history and swap files when old?
+"  TODO Undo plugin
 " -----------------------------------------------------------------------------
 
 " use Vim settings, rather than Vi settings
@@ -17,9 +20,11 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " start the pathogen plugin
 execute pathogen#infect()
 
+" generate helptags for plugins
+call pathogen#helptags()
 
 " -----------------------------------------------------------------------------
-" Text display settings
+" Display settings
 " -----------------------------------------------------------------------------
 
 " start scrolling 2 lines before horizontal window border
@@ -37,15 +42,37 @@ set nolist
 " include as much of the last line as possible when it wraps
 set display+=lastline 
 
-" Show invisible characters
-set listchars=tab:>\ ,trail:·,eol:¬,nbsp:_
+" show invisible characters
+set listchars=tab:>-,trail:·,eol:¬
+set list
+
+" Change terminal's title
+set title
+
+" don't beep
+set visualbell
+set noerrorbells
 
 " highlight current line
 set cursorline
 
-" enable line numbers
-set number
+" enable relative line numbers
+set number relativenumber
 
+" Set focused buffer to use relative and absolute numbers
+autocmd WinEnter,FocusGained * :setlocal number relativenumber
+autocmd WinLeave,FocusLost   * :setlocal number norelativenumber
+
+" Function to toggle line number style
+function! ToggleNuMode()
+  if(&relativenumber == 1)
+    set number norelativenumber
+  else
+    set number relativenumber
+  endif
+endfunc
+
+map <silent> <C-n> :call ToggleNuMode()<CR>
 
 " -----------------------------------------------------------------------------
 " Tab settings
@@ -68,7 +95,7 @@ set softtabstop=2
 " Editing text
 " -----------------------------------------------------------------------------
 
-" map jk to escape 
+" map jk to escape
 imap jk <esc>
 
 "backspace over everything
@@ -77,7 +104,7 @@ set backspace=indent,eol,start
 " delete comment character when joining commented lines
 set formatoptions+=j
 
-" enable autoindent 
+" enable autoindent
 set autoindent
 
 
@@ -102,6 +129,10 @@ set smartcase
 
 " use <C-L> to clear highlighting
 nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+
+" allow cursor to always move to next line even if a line is wrapped
+nnoremap j gj
+nnoremap k gk
 
 " Enable support for % to jump between matching keywords (e.g. being:end)
 runtime macros/matchit.vim
@@ -165,7 +196,7 @@ cnoremap <Esc><C-F>     <S-Right>
 " -----------------------------------------------------------------------------
 
 " display current cursor position in status bar
-set ruler 
+set ruler
 
 " display incomplete command in lower right corner"
 set showcmd
@@ -175,6 +206,41 @@ set cmdheight=1
 
 " Enable enhanced command-line completion
 set wildmenu
+
+" always show status line even when editing single file
+set laststatus=2
+
+
+" -----------------------------------------------------------------------------
+" Swap/Backup/Undo/Viminfo settings
+" -----------------------------------------------------------------------------
+
+" Tell vim to remember certain things when we exit
+"  '50  :  marks will be remembered for up to 50 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :100 :  up to 100 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+set viminfo='50,\"100,:100,%,n~/.viminfo
+
+" remember search history and commands
+set history=1000
+
+" remember many levels of undo
+set undolevels=1000
+
+" set persistent undo
+set undofile
+
+" set undo directory (// includes filepath in name)
+set undodir=~/.vim/undo//
+
+" set backup directory (// includes filepath in name)
+set backupdir=~/.vim/backup//
+
+" set swp directory (// includes filepath in name)
+set directory=~/.vim/swp//
+
 
 " -----------------------------------------------------------------------------
 " Miscellaneous settings
@@ -188,24 +254,28 @@ endif
 " use system clipboard
 set clipboard=unnamed
 
-" map tagbar plugin window to F9
-nmap <F9> :TagbarToggle<CR>
+" map \ev to edit vimrc
+nmap <silent> <leader>ev :split $MYVIMRC<CR>
+
+" map \sv to source vimrc
+nmap <silent> <leader>sv :source $MYVIMRC<CR>
+
+" map nerdtree plugin widnow to F3
+map <F3> :NERDTreeToggle<CR>
+
+" map undotree plugin window to F4
+nnoremap <F4> :UndotreeToggle<cr>
 
 " map spelling to F5
 nmap <F5> :setlocal spell! spelllang=en_us<CR>
+
+" map tagbar plugin window to F9
+nmap <F9> :TagbarToggle<CR>
 
 
 " -----------------------------------------------------------------------------
 " restore old cursor position
 " -----------------------------------------------------------------------------
-
-" Tell vim to remember certain things when we exit
-"  '10  :  marks will be remembered for up to 10 previously edited files
-"  "100 :  will save up to 100 lines for each register
-"  :20  :  up to 20 lines of command-line history will be remembered
-"  %    :  saves and restores the buffer list
-"  n... :  where to save the viminfo files
-set viminfo='10,\"100,:20,%,n~/.viminfo
 
 function! ResCur()
   if line("'\"") <= line("$")
