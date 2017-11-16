@@ -34,7 +34,9 @@ if [ $machine == "mac" ]; then
 
       # Add brew coreutils to path to override bsd versions with OSX
       PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-      MANPATH="$(brew --prefix coreutils)/libexec/gnuman:${MANPATH-usr/share/man}"
+
+      MANPATH="$(brew --prefix coreutils)/libexec/gnuman:${MANPATH}"
+      MANPATH="/usr/local/share/man:${MANPATH}"
       export MANPATH=$MANPATH
    fi
 fi
@@ -143,8 +145,14 @@ if [ $DEBUG_RC -gt 0 ]; then
   DEBUG_RC=$(($DEBUG_RC + 1))
 fi
 
-if [ -d /etc/bash_completion.d ]; then
-   for file in /etc/bash_completion.d/* ; do
+if [ $machine="brew" ]; then
+  completion_path="$(brew --prefix git)/etc/bash_completion.d"
+else
+  completion_path="/etc/bash_completion.d"
+fi
+
+if [ -d ${completion_path} ]; then
+   for file in ${completion_path}/* ; do
       source "$file"
    done
 fi
