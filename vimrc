@@ -262,13 +262,19 @@ nmap <silent> <leader>ev :split $MYVIMRC<CR>
 nmap <silent> <leader>sv :source $MYVIMRC<CR>
 
 " map nerdtree plugin widnow to F3
-map <F3> :NERDTreeToggle<CR>
+nmap <F3> :NERDTreeToggle<CR>
 
 " map undotree plugin window to F4
-nnoremap <F4> :GundoToggle<cr>
+nmap <F4> :GundoToggle<cr>
 
 " map spelling to F5
 nmap <F5> :setlocal spell! spelllang=en_us<CR>
+
+" map indent guides to F5
+nmap <F6> :IndentLinesToggle<CR>
+
+" disable by default
+let g:indentLine_enabled = 0
 
 " map tagbar plugin window to F9
 nmap <F9> :TagbarToggle<CR>
