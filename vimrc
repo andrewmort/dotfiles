@@ -38,6 +38,7 @@ set linebreak
 
 " disable linebreak when end of line is hit
 set nolist
+set textwidth=0
 
 " include as much of the last line as possible when it wraps
 set display+=lastline 
@@ -264,7 +265,7 @@ nmap <silent> <leader>sv :source $MYVIMRC<CR>
 map <F3> :NERDTreeToggle<CR>
 
 " map undotree plugin window to F4
-nnoremap <F4> :UndotreeToggle<cr>
+nnoremap <F4> :GundoToggle<cr>
 
 " map spelling to F5
 nmap <F5> :setlocal spell! spelllang=en_us<CR>
