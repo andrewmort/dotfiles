@@ -53,6 +53,7 @@ set title
 " don't beep
 set visualbell
 set noerrorbells
+set t_vb=
 
 " highlight current line
 set cursorline
