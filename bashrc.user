@@ -145,7 +145,7 @@ if [ $DEBUG_RC -gt 0 ]; then
   DEBUG_RC=$(($DEBUG_RC + 1))
 fi
 
-if [ $machine="brew" ]; then
+if [ $machine == "brew" ]; then
   completion_path="$(brew --prefix git)/etc/bash_completion.d"
 else
   completion_path="/etc/bash_completion.d"
