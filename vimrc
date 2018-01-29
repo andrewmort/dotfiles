@@ -80,18 +80,25 @@ map <silent> <C-n> :call ToggleNuMode()<CR>
 " Tab settings
 " -----------------------------------------------------------------------------
 
+" Function to set tab spacing
+function! SetTabSpace(space)
+  " Number of spaces a <Tab> in the file counts for
+  let &tabstop=a:space
+
+  " Number of spaces to use for each indent
+  let &shiftwidth=a:space
+
+  " Number of spaces a <Tab> counts for when editting
+  let &softtabstop=a:space
+endfunc
+
 " expand all tabs out to spaces
 set expandtab
 
-" set tabstop to 2
-set tabstop=2
+" Set tab spacing
+call SetTabSpace(2)
 
-" set shiftwidth to 2 (used with > indent commands)
-set shiftwidth=2
-
-" number of spaces represented by a tab
-set softtabstop=2
-
+map <leader>t :call SetTabSpace(
 
 " -----------------------------------------------------------------------------
 " Editing text
