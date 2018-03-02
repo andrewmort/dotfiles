@@ -116,6 +116,37 @@ set formatoptions+=j
 " enable autoindent
 set autoindent
 
+" Function to toggle indenting settings
+let b:myindent=1
+function! ToggleIndent()
+  if b:myindent
+    let b:saveindentexpr=&l:indentexpr
+    let b:saveautoindent=&l:autoindent
+    let b:savecindent=&l:cindent
+    let b:savesmartindent=&l:smartindent
+
+    setlocal noautoindent
+    setlocal nocindent
+    setlocal nosmartindent
+    setlocal indentexpr=""
+
+    let b:myindent=0
+
+    echo "ToggleIndent(): Auto indenting disabled"
+  else
+    let &l:indentexpr=b:saveindentexpr
+    let &l:autoindent=b:saveautoindent
+    let &l:cindent=b:savecindent
+    let &l:smartindent=b:savesmartindent
+
+    let b:myindent=1
+
+    echo "ToggleIndent(): Auto indenting enabled"
+  endif
+endfunction
+
+nmap <silent> <leader>i :call ToggleIndent()<CR>
+
 
 " -----------------------------------------------------------------------------
 " Moving around, searching, and patterns
