@@ -38,3 +38,6 @@
 [submodule "vim/bundle/indentLine"]
 	path = vim/bundle/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
+[submodule "vim/bundle/vim-localrc"]
+	path = vim/bundle/vim-localrc
+	url = https://github.com/thinca/vim-localrc.git
