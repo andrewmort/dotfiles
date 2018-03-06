@@ -336,4 +336,9 @@ augroup resCur
 augroup END
 
 
+" -----------------------------------------------------------------------------
+" load local project settings from .local.vimrc
+" -----------------------------------------------------------------------------
 
+" search for and load localrc from / to current directory
+call localrc#load('.local.vimrc','/',-1)
