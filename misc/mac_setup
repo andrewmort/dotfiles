@@ -16,4 +16,7 @@
   - https://brew.sh/
   - Then run "brew tap homebrew/dupes"
   - Then run "brew doctor"
-6. Install utilities
+6. Install brew utilities
+  "~/.dotfiles/misc/homebrew-install-gnu.sh"
+  - fix gdb by following instructions at 
+        http://sourceware.org/gdb/wiki/BuildingOnDarwin

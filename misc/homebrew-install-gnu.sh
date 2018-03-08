@@ -20,11 +20,14 @@ brew install screen
 brew install watch
 brew install wdiff --with-gettext
 brew install wget
+brew install gnupg
+brew install gnupg2
 
 # OS X ships a GNU version, but too old
 brew install bash
 brew install emacs
 brew install gdb  # gdb requires further actions to make it work. See `brew info gdb`.
+brew install guile
 brew install gpatch
 brew install m4
 brew install make
@@ -35,11 +38,11 @@ brew install file-formula
 brew install git
 brew install less
 brew install openssh
-brew install perl518   # must run "brew tap homebrew/versions" first!
-brew install python
+#brew install perl518   # must run "brew tap homebrew/versions" first!
+#brew install python
 brew install rsync
 brew install svn
 brew install unzip
 brew install vim --override-system-vi
-brew install macvim --override-system-vim --custom-system-icons
+#brew install macvim --override-system-vim --custom-system-icons
 brew install zsh
