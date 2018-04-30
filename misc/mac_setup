@@ -1,0 +1,19 @@
+1. Download iterm2
+2. Download Mac Command Line Tools for Xcode
+3. Clone .dotfiles repo from github
+  a. Follow github instructions to add a new public key (~/.ssh/github_rsa)
+    1. Add the following to ~/.ssh/config:
+        Host github.com
+          AddKeysToAgent yes
+          UseKeychain yes
+          IdentityFile ~/.ssh/github_rsa
+  b. "clone git@github.com:andrewmort/dotfiles.git ~/.dotfiles"
+  c. Install dotfiles by running ./install inside ~/.dotfiles
+4. Load solarized color profile from iTerm2->Preferences->Profiles->
+    Colors->Color Presets->Import. Navigate to solarized color profile, add 
+    to iTerm and then select it from the Color Presets menu
+5. Install brew following instructions as website
+  - https://brew.sh/
+  - Then run "brew tap homebrew/dupes"
+  - Then run "brew doctor"
+6. Install utilities

@@ -20,5 +20,6 @@
     ~/.cshrc: 
     ~/.cshrc.user:
     ~/.dircolors: misc/dircolors-solarized/dircolors.ansi-dark
+    ~/.bash_profile:
 
 
