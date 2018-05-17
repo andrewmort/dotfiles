@@ -255,15 +255,29 @@ set wildmode=list:longest,full
 " always show status line even when editing single file
 set laststatus=2
 
-" set simple statusline
-set statusline=                               " clear statusline
-set statusline+=[%n]                          " buffer number
-set statusline+=\ %<%F                        " full filename
-set statusline+=\ %h%m%r                      " help, modified, readonly
-set statusline+=%=                            " space
-set statusline+=\ %y                          " filetype
-set statusline+=\ \ \ %-14.(%l/%L,%c%V%)      " line/lines, column
-set statusline+=\ %P                          " percent of file
+
+" Function to toggle rel vs. full path in statusline
+let g:mystatus_relpath=1
+function! ToggleStatus()
+  set statusline=                               " clear statusline
+  set statusline+=[%n]                          " buffer number
+
+  if g:mystatus_relpath
+    set statusline+=\ %<%F                      " full filename
+    let g:mystatus_relpath=0
+  else
+    set statusline+=\ %<%f                      " relative filename
+    let g:mystatus_relpath=1
+  endif
+
+  set statusline+=\ %h%m%r                      " help, modified, readonly
+  set statusline+=%=                            " space
+  set statusline+=\ %y                          " filetype
+  set statusline+=\ \ \ %-14.(%l/%L,%c%V%)      " line/lines, column
+  set statusline+=\ %P                          " percent of file
+endfunction
+call ToggleStatus()
+nmap <silent> <leader>p :call ToggleStatus()<CR>
 
 
 " -----------------------------------------------------------------------------
