@@ -337,6 +337,15 @@ nmap <silent> <leader>dp :diffput<CR>
 nmap <silent> <leader>dg :diffget<CR>
 nmap <silent> <leader>du :diffupdate<CR>
 
+" add remove directory for stack
+if exists("loaded_pushpop")
+  nmap <silent> <leader>pushd :pushd %:p:h<CR>:pwd<CR>
+  nmap <silent> <leader>popd  :popd<CR>:pwd<CR>
+else
+  nmap <silent> <leader>pushd :cd %:p:h<CR>:pwd<CR>
+  nmap <silent> <leader>popd  :cd -<CR>:pwd<CR>
+endif
+
 " map nerdtree plugin widnow to F3
 nmap <F3> :NERDTreeToggle<CR>
 
