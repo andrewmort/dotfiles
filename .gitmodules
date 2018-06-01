@@ -41,3 +41,10 @@
 [submodule "vim/bundle/vim-localrc"]
 	path = vim/bundle/vim-localrc
 	url = https://github.com/thinca/vim-localrc.git
+	ignore = dirty
+[submodule "vim/bundle/PushPop.vim"]
+	path = vim/bundle/PushPop.vim
+	url = https://github.com/vim-scripts/PushPop.vim.git
+[submodule "vim/bundle/genutils"]
+	path = vim/bundle/genutils
+	url = https://github.com/vim-scripts/genutils.git

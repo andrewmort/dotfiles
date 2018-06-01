@@ -246,9 +246,38 @@ set cmdheight=1
 
 " Enable enhanced command-line completion
 set wildmenu
+set wildmode=list:longest,full
+"            |    |       |
+"            |    |       +-- complete full match (second use of wildchar)
+"            |    +---------- complete till longest common string
+"            +--------------- list all matchs (first use of wildchar)
 
 " always show status line even when editing single file
 set laststatus=2
+
+
+" Function to toggle rel vs. full path in statusline
+let g:mystatus_relpath=1
+function! ToggleStatus()
+  set statusline=                               " clear statusline
+  set statusline+=[%n]                          " buffer number
+
+  if g:mystatus_relpath
+    set statusline+=\ %<%F                      " full filename
+    let g:mystatus_relpath=0
+  else
+    set statusline+=\ %<%f                      " relative filename
+    let g:mystatus_relpath=1
+  endif
+
+  set statusline+=\ %h%m%r                      " help, modified, readonly
+  set statusline+=%=                            " space
+  set statusline+=\ %y                          " filetype
+  set statusline+=\ \ \ %-14.(%l/%L,%c%V%)      " line/lines, column
+  set statusline+=\ %P                          " percent of file
+endfunction
+call ToggleStatus()
+nmap <silent> <leader>p :call ToggleStatus()<CR>
 
 
 " -----------------------------------------------------------------------------
@@ -299,6 +328,23 @@ nmap <silent> <leader>ev :split $MYVIMRC<CR>
 
 " map \sv to source vimrc
 nmap <silent> <leader>sv :source $MYVIMRC<CR>
+
+" delete white space at end of line
+nmap <silent> <leader>dw :%s/\s\+$//e<CR>
+
+" diff put/get/update
+nmap <silent> <leader>dp :diffput<CR>
+nmap <silent> <leader>dg :diffget<CR>
+nmap <silent> <leader>du :diffupdate<CR>
+
+" add remove directory for stack
+if exists("loaded_pushpop")
+  nmap <silent> <leader>pushd :pushd %:p:h<CR>:pwd<CR>
+  nmap <silent> <leader>popd  :popd<CR>:pwd<CR>
+else
+  nmap <silent> <leader>pushd :cd %:p:h<CR>:pwd<CR>
+  nmap <silent> <leader>popd  :cd -<CR>:pwd<CR>
+endif
 
 " map nerdtree plugin widnow to F3
 nmap <F3> :NERDTreeToggle<CR>
