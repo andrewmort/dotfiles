@@ -63,12 +63,12 @@ if [ $DEBUG_RC -gt 0 ]; then
   DEBUG_RC=$(($DEBUG_RC + 1))
 fi
 
-if [ -e /home/${USER}/bin ]; then
-   export PATH="/home/${USER}/bin:$PATH"
+if [ -e ~/bin ]; then
+   export PATH="~/bin:$PATH"
 fi
 
-if [ -e /home/${USER}/share/man ]; then
-   export MANPATH="/home/${USER}/share/man:${MANPATH}"
+if [ -e ~/share/man ]; then
+   export MANPATH="~/share/man:${MANPATH}"
 fi
 
 # -----------------------------------------------------------------------------
