@@ -227,11 +227,25 @@ set   COLOR_GREEN="%{\033[0;32m%}"   # green
 set     COLOR_END="%{\033[0m%}"
 
 # define prompt color usage
-set   COLOR_TIME="${COLOR_BASE01}"
-set  COLOR_SHELL="${COLOR_VIOLET}"
-set   COLOR_USER="${COLOR_BASE0}"
-set   COLOR_PATH="${COLOR_BASE1}"
-set COLOR_PROMPT="${COLOR_BLUE}"
+if ("${SHELL_COLOR}" == "SOLARIZED_DARK") then
+   set   COLOR_TIME="${COLOR_BASE01}"
+   set  COLOR_SHELL="${COLOR_VIOLET}"
+   set   COLOR_USER="${COLOR_BASE0}"
+   set   COLOR_PATH="${COLOR_BASE1}"
+   set COLOR_PROMPT="${COLOR_BLUE}"
+else if ("${SHELL_COLOR}" == "SOLARIZED_DARK") then
+   set   COLOR_TIME="${COLOR_BASE1}"
+   set  COLOR_SHELL="${COLOR_VIOLET}"
+   set   COLOR_USER="${COLOR_BASE00}"
+   set   COLOR_PATH="${COLOR_BASE01}"
+   set COLOR_PROMPT="${COLOR_BLUE}"
+else
+   set COLOR_TIME="${COLOR_BASE03}"
+   set COLOR_SHELL="${COLOR_CYAN}"
+   set COLOR_USER=
+   set COLOR_PATH=
+   set COLOR_PROMPT="${COLOR_BLUE}"
+endif
 
 
 # clear settings

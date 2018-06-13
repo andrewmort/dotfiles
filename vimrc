@@ -182,14 +182,31 @@ runtime macros/matchit.vim
 " Color Settings
 " -----------------------------------------------------------------------------
 
-" use dark background
-set background=dark
+" Get SHELL_COLOR variable from shell
+let shell_color = $SHELL_COLOR
 
-" use solarized colorscheme
-colorscheme solarized
+if shell_color == "SOLARIZED_DARK"
+  set background=dark
+  colorscheme solarized
+  set t_Co=16
 
-" set number of colors for solarized to work correctly
-set t_Co=16
+elseif shell_color == "SOLARIZED_LIGHT"
+  set background=light
+  colorscheme solarized
+  set t_Co=16
+
+elseif shell_color == "BLACK"
+  set background=dark
+  colorscheme default
+  set t_Co=256
+
+else
+  " use dark background
+  set background=light
+  colorscheme default
+  set t_Co=256
+endif
+
 
 
 " -----------------------------------------------------------------------------

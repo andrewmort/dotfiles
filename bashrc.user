@@ -129,8 +129,18 @@ shopt -s checkwinsize
 
 # see if dircolors exists, then set dircolors (used in ls)
 if hash dircolors 2> /dev/null; then
-   if [ -f ~/.dircolors ]; then
-      eval "$(dircolors -b ~/.dircolors)"
+   DIRCOLOR_DIR="${HOME}/.dircolors"
+
+   if [[ "${SHELL_COLOR}" == "SOLARIZED_DARK" ]] ; then
+      DIRCOLOR_FILE="${DIRCOLOR_DIR}/dircolors.solarized-dark"
+      if [ -f ${DIRCOLOR_FILE} ]; then
+         eval "$(dircolors -b ${DIRCOLOR_FILE})"
+      fi
+   elif [[ "${SHELL_COLOR}" == "SOLARIZED_LIGHT" ]] ; then
+      DIRCOLOR_FILE="${DIRCOLOR_DIR}/dircolors.solarized-light"
+      if [ -f ${DIRCOLOR_FILE} ]; then
+         eval "$(dircolors -b ${DIRCOLOR_FILE})"
+      fi
    fi
 fi
 
@@ -197,14 +207,16 @@ if [ $DEBUG_RC -gt 0 ]; then
 fi
 
 # define solarized colors
- COLOR_BASE03='\[\e[01;30m\]'   # brblack   - background
- COLOR_BASE02='\[\e[00;30m\]'   # black     - background highlights
- COLOR_BASE01='\[\e[01;32m\]'   # brgreen   - comments/secondary content
- COLOR_BASE00='\[\e[01;33m\]'   # bryellow
-  COLOR_BASE0='\[\e[01;34m\]'   # brblue    - body text / default code 
-  COLOR_BASE1='\[\e[01;36m\]'   # brcyan    - optional emphasized content
-  COLOR_BASE2='\[\e[00;37m\]'   # white
-  COLOR_BASE3='\[\e[01;37m\]'   # brwhite
+ COLOR_BASE03='\[\e[01;30m\]'   # brblack   - (dark:  background)
+ COLOR_BASE02='\[\e[00;30m\]'   # black     - (dark:  background highlights)
+ COLOR_BASE01='\[\e[01;32m\]'   # brgreen   - (dark:  comments/secondary content)
+                                #             (light: optional emphasized content)
+ COLOR_BASE00='\[\e[01;33m\]'   # bryellow  - (light: body text / default code)
+  COLOR_BASE0='\[\e[01;34m\]'   # brblue    - (dark:  body text / default code)
+  COLOR_BASE1='\[\e[01;36m\]'   # brcyan    - (dark:  optional emphasized content)
+                                #             (light: comments/secondary content)
+  COLOR_BASE2='\[\e[00;37m\]'   # white     - (light: background highlights)
+  COLOR_BASE3='\[\e[01;37m\]'   # brwhite   - (light: background)
  COLOR_YELLOW='\[\e[00;33m\]'   # yellow
  COLOR_ORANGE='\[\e[01;31m\]'   # brred
     COLOR_RED='\[\e[00;31m\]'   # red
@@ -212,15 +224,29 @@ COLOR_MAGENTA='\[\e[00;35m\]'   # magenta
  COLOR_VIOLET='\[\e[01;35m\]'   # brmagenta
    COLOR_BLUE='\[\e[00;34m\]'   # blue
    COLOR_CYAN='\[\e[00;36m\]'   # cyan
-  COLOR_GREEN='\[\e[00;32m\]'   # green
-    COLOR_END='\[\e[00m\]'   
+  COLOR_GREEN='\[\e[00;32m\]'   # green     - (light: background)
+    COLOR_END='\[\e[00m\]'
 
 # define prompt color usage
-COLOR_TIME=${COLOR_BASE01}
-COLOR_SHELL=${COLOR_ORANGE}
-COLOR_USER=${COLOR_BASE0}
-COLOR_PATH=${COLOR_BASE1}
-COLOR_PROMPT=${COLOR_BLUE}
+if [[ "${SHELL_COLOR}" == "SOLARIZED_DARK" ]] ; then
+   COLOR_TIME=${COLOR_BASE01}
+   COLOR_SHELL=${COLOR_ORANGE}
+   COLOR_USER=${COLOR_BASE0}
+   COLOR_PATH=${COLOR_BASE1}
+   COLOR_PROMPT=${COLOR_BLUE}
+elif [[ "${SHELL_COLOR}" == "SOLARIZED_LIGHT" ]] ; then
+   COLOR_TIME=${COLOR_BASE1}
+   COLOR_SHELL=${COLOR_ORANGE}
+   COLOR_USER=${COLOR_BASE00}
+   COLOR_PATH=${COLOR_BASE01}
+   COLOR_PROMPT=${COLOR_BLUE}
+else
+   COLOR_TIME=${COLOR_BASE03}
+   COLOR_SHELL=${COLOR_MAGENTA}
+   COLOR_USER=
+   COLOR_PATH=
+   COLOR_PROMPT=${COLOR_BLUE}
+fi
 
 # clear settings
 PS1=""
