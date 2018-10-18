@@ -405,3 +405,4 @@ augroup END
 
 " search for and load localrc from / to current directory
 call localrc#load('.local.vimrc','/',-1)
+set t_BE=			" Prevent copy/paste problems after exiting vim

@@ -106,14 +106,15 @@ fi
 #export SHELL=/bin/bash
 
 # set history length 
-HISTSIZE=2000
+HISTSIZE=100000
 SAVEHIST=$HISTSIZE
+HISTFILESIZE=100000
 
 # set history file
 HISTFILE="$HOME/.bash_history"
 
 # append to history
-shopt -s histappend 
+shopt -s histappend
 
 # -----------------------------------------------------------------------------
 # 7. Appearance setings
