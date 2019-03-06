@@ -147,6 +147,12 @@ if ( $DEBUG_RC > 0 ) then
   set DEBUG_RC = `expr $DEBUG_RC + 1`
 endif
 
+# Set shell color to something so script doesn't fail
+if (! $?SHELL_COLOR) then
+  setenv SHELL_COLOR "unset"
+  #echo "WARNING: The SHELL_COLOR variable was unset."
+endif
+
 # see if dircolors exists
 which dircolors >& /dev/null
 

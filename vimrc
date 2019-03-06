@@ -17,6 +17,32 @@ set nocompatible
 " add the pathogen plugin to the vim runtime
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 
+" To disable a plugin, add it's bundle name to the following list
+let g:pathogen_disabled = []
+
+" TODO: do I need these?
+call add(g:pathogen_disabled, 'PushPop.vim')
+call add(g:pathogen_disabled, 'ctrlp.vim')
+call add(g:pathogen_disabled, 'detectindent')
+call add(g:pathogen_disabled, 'indentLine')
+call add(g:pathogen_disabled, 'tagbar')
+
+" TODO: find plugin with less shell configuration
+"call add(g:pathogen_disabled, 'vim-colors-solarized')
+
+" TODO: rewrite this plugin
+"call add(g:pathogen_disabled, 'gundo.vim')
+
+" TODO: rewrite this plugin
+"call add(g:pathogen_disabled, 'verilog_systemverilog.vim')
+
+" TODO: try using built in explorer
+call add(g:pathogen_disabled, 'nerdtree')
+
+" TODO: do I need the perforce plugin?
+call add(g:pathogen_disabled, 'perforce')
+call add(g:pathogen_disabled, 'genutils')
+
 " start the pathogen plugin
 execute pathogen#infect()
 
@@ -26,6 +52,9 @@ call pathogen#helptags()
 " -----------------------------------------------------------------------------
 " Display settings
 " -----------------------------------------------------------------------------
+
+" use utf-8 encoding
+set encoding=utf-8
 
 " start scrolling 2 lines before horizontal window border
 set scrolloff=2
@@ -360,6 +389,9 @@ else
   nmap <silent> <leader>pushd :cd %:p:h<CR>:pwd<CR>
   nmap <silent> <leader>popd  :cd -<CR>:pwd<CR>
 endif
+
+" load perforce utils
+runtime bundle/perforce/perforce/perforceutils.vim
 
 " map nerdtree plugin widnow to F3
 nmap <F3> :NERDTreeToggle<CR>
