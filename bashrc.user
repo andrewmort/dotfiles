@@ -29,8 +29,10 @@ esac
 
 # if we have brew installed on mac, change system type
 if [ $machine == "mac" ]; then
-   if hash brew 2> /dev/null; then
+   if hash /usr/local/bin/brew 2> /dev/null; then
       machine="brew"
+
+      PATH="/usr/local/bin:$PATH"
 
       # Add brew coreutils to path to override bsd versions with OSX
       PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
