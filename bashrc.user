@@ -108,14 +108,15 @@ fi
 #export SHELL=/bin/bash
 
 # set history length 
-HISTSIZE=2000
+HISTSIZE=100000
 SAVEHIST=$HISTSIZE
+HISTFILESIZE=100000
 
 # set history file
 HISTFILE="$HOME/.bash_history"
 
 # append to history
-shopt -s histappend 
+shopt -s histappend
 
 # -----------------------------------------------------------------------------
 # 7. Appearance setings
@@ -128,6 +129,12 @@ fi
 
 # force bash to check for window size (prevent weird line wrapping)
 shopt -s checkwinsize
+
+# Set shell color to something so script doesn't fail
+if [ -z "${SHELL_COLOR}" ]; then 
+  SHELL_COLOR="unset"
+  #echo "WARNING: The SHELL_COLOR variable was unset."
+fi
 
 # see if dircolors exists, then set dircolors (used in ls)
 if hash dircolors 2> /dev/null; then

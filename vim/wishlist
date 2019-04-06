@@ -1,0 +1,2 @@
+* Undo: By default only operate on history since file was opened. A keystroke
+  can allow full file history.

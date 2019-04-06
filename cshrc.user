@@ -14,7 +14,7 @@
 set DEBUG_RC=0
 
 # -----------------------------------------------------------------------------
-# 1. Determine system we are running 
+# 1. Determine system we are running
 # -----------------------------------------------------------------------------
 
 if ( $DEBUG_RC > 0 ) then
@@ -24,7 +24,7 @@ endif
 
 set unameOut = `uname -s`
 switch ("$unameOut")
-  case "Linux*":  
+  case "Linux*":
     set machine="linux"
     breaksw
   case "Darwin":
@@ -46,6 +46,7 @@ if ( $machine == "mac" ) then
       # Add brew coreutils to path to override bsd versions with OSX
       setenv PATH "`brew --prefix coreutils`/libexec/gnubin:${PATH}"
       setenv MANPATH "`brew --prefix coreutils`/libexec/gnuman:${MANPATH}"
+      setenv MANPATH "/usr/local/share/man:${MANPATH}"
    endif
 endif
 
@@ -90,7 +91,7 @@ if ( $DEBUG_RC > 0 ) then
 endif
 
 # remove . from path
-setenv PATH `echo -n ${PATH} | awk -v RS=: -v ORS=: '$0 != "'.'"' | sed 's/:$//'`; 
+setenv PATH `echo -n ${PATH} | awk -v RS=: -v ORS=: '$0 != "'.'"' | sed 's/:$//'`;
 
 # set editor
 setenv EDITOR vim
@@ -118,24 +119,24 @@ endif
 # ensure shell variable is updated with correct shell
 #setenv SHELL "/bin/tcsh"
 
-# set history length 
+# set history length
 set history=2000
 set savehist = 2000
 
 # Notify when job completes
-set notify           
+set notify
 
 # No beep
-set nobeep           
+set nobeep
 
 # Enable file completion
-set filec            
+set filec
 
 # List choices when file completion fails
-set autolist         
+set autolist
 
 # Do not create core file
-limit coredumpsize 0 
+limit coredumpsize 0
 
 # -----------------------------------------------------------------------------
 # 7. Appearance setings
@@ -146,13 +147,29 @@ if ( $DEBUG_RC > 0 ) then
   set DEBUG_RC = `expr $DEBUG_RC + 1`
 endif
 
+# Set shell color to something so script doesn't fail
+if (! $?SHELL_COLOR) then
+  setenv SHELL_COLOR "unset"
+  #echo "WARNING: The SHELL_COLOR variable was unset."
+endif
+
 # see if dircolors exists
 which dircolors >& /dev/null
 
 # set dircolors (used in ls)
 if ($? == 0) then
-  if ( -e ~/.dircolors ) then
-    eval `dircolors -c ~/.dircolors`
+  set DIRCOLOR_DIR = "${HOME}/.dircolors"
+
+  if ("${SHELL_COLOR}" == "SOLARIZED_DARK") then
+    set DIRCOLOR_FILE = "${DIRCOLOR_DIR}/dircolors.solarized-dark"
+    if ( -e ${DIRCOLOR_FILE}) then
+      eval `dircolors -c ${DIRCOLOR_FILE}`
+    endif
+  else if ("${SHELL_COLOR}" == "SOLARIZED_LIGHT") then
+    set DIRCOLOR_FILE = "${DIRCOLOR_DIR}/dircolors.solarized-light"
+    if ( -e ${DIRCOLOR_FILE}) then
+      eval `dircolors -c ${DIRCOLOR_FILE}`
+    endif
   endif
 endif
 
@@ -264,7 +281,7 @@ set PROMPT="${PROMPT}${COLOR_USER}%n@%m${COLOR_END}:"
 set PROMPT="${PROMPT}${COLOR_PATH}%c${COLOR_END}"
 
 # add prompt indicator
-set PROMPT="${PROMPT}${COLOR_PROMPT}>${COLOR_END} " 
+set PROMPT="${PROMPT}${COLOR_PROMPT}>${COLOR_END} "
 
 set prompt="$PROMPT"
 
@@ -298,4 +315,4 @@ unset COLOR_USER
 unset COLOR_PATH
 unset COLOR_PROMPT
 
-unset PROMPT 
+unset PROMPT
