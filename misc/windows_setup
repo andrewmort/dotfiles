@@ -1,0 +1,16 @@
+Install WSL
+  https://docs.microsoft.com/en-us/windows/wsl/install-win10
+  - Used Ubuntu from Windows store
+
+Slowness on WSL due to Windows Defender
+  - Exclude entire WSL subtree
+  Virus & threat protection settings > Add or remove exclusions
+    Add: %LOCALAPPDATA%\Packages\CanonicalGroupLimited...
+
+Install termainl emulator
+  https://github.com/mintty/wsltty/releases
+  - Installed version 1.9.6
+
+Update Ubuntu files
+  sudo apt-get udpate
+  sudo apt-get upgrade

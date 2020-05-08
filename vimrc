@@ -24,7 +24,7 @@ let g:pathogen_disabled = []
 call add(g:pathogen_disabled, 'PushPop.vim')
 call add(g:pathogen_disabled, 'ctrlp.vim')
 call add(g:pathogen_disabled, 'detectindent')
-call add(g:pathogen_disabled, 'indentLine')
+"call add(g:pathogen_disabled, 'indentLine')
 call add(g:pathogen_disabled, 'tagbar')
 
 " TODO: find plugin with less shell configuration
@@ -48,6 +48,43 @@ execute pathogen#infect()
 
 " generate helptags for plugins
 call pathogen#helptags()
+
+" -----------------------------------------------------------------------------
+" Local settings
+"
+" TODO: Move into local vimrc file
+" -----------------------------------------------------------------------------
+
+" directories to include in tag generation
+let g:octave_tagdirs=[
+  \"/mnt/c/Octave/Octave-4.2.0/share/octave/4.2.0/m",
+  \"$ASPBOX/engr/sw/Installations/Electric/Code/Octave",
+  \"$ASPBOX/engr/sw/lib/Matlab",
+  \"/mnt/c/Octave/Octave-4.2.0/share/octave/packages/ramp_sdk-1.0.7",
+  \"/mnt/c/Octave/Octave-4.2.0/share/octave/packages/analog_discovery-1.0.0",
+  \"./"
+  \]
+
+" additional arguments to ctags
+let g:octave_tagargs=''
+
+" create tags file in the current directory including files
+" in octave_tagdirs and in the current directory
+function! OctaveTags()
+  let l:cmd=join(['ctags -Rf ./tags ', g:octave_tagargs],'')
+
+  for cur in g:octave_tagdirs
+    let l:cmd=join([l:cmd, l:cur],' ')
+  endfo
+
+  call system(l:cmd)
+  let &tags='tags;'
+endfunction
+
+" remove '=' from filename extraction so no space needed between function
+" name and return varible name (e.g. net=netGen())
+set isfname-==
+
 
 " -----------------------------------------------------------------------------
 " Display settings
@@ -88,7 +125,7 @@ set t_vb=
 set cursorline
 
 " enable relative line numbers
-set number relativenumber
+set number norelativenumber
 
 " Set focused buffer to use relative and absolute numbers
 autocmd WinEnter,FocusGained * :setlocal number relativenumber
@@ -362,7 +399,16 @@ set directory=~/.vim/swp//
 " use normal mouse mode
 if has('mouse')
    set mouse=n
-endif
+
+   "TODO move into windows specific settings
+   " https://github.com/mintty/mintty/issues/827
+   " More tips including mouse: https://github.com/mintty/mintty/wiki/Tips
+   if has("mouse_sgr")
+     set ttymouse=sgr
+   else
+     set ttymouse=xterm2
+   end
+ endif
 
 " use system clipboard
 set clipboard=unnamed
@@ -397,7 +443,8 @@ runtime bundle/perforce/perforce/perforceutils.vim
 nmap <F3> :NERDTreeToggle<CR>
 
 " map undotree plugin window to F4
-nmap <F4> :GundoToggle<cr>
+"nmap <F4> :GundoToggle<cr>
+nmap <F4> :UndotreeToggle<cr>
 
 " map spelling to F5
 nmap <F5> :setlocal spell! spelllang=en_us<CR>

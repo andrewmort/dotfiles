@@ -54,3 +54,12 @@
 [submodule "vim/bundle/perforce"]
 	path = vim/bundle/perforce
 	url = https://github.com/vim-scripts/perforce.git
+[submodule "misc/mintty-colors-solarized"]
+	path = misc/mintty-colors-solarized
+	url = git@github.com:andrewmort/mintty-colors-solarized.git
+[submodule "misc/tmux-colors-solarized"]
+	path = misc/tmux-colors-solarized
+	url = https://github.com/seebi/tmux-colors-solarized.git
+[submodule "vim/bundle/undotree"]
+	path = vim/bundle/undotree
+	url = https://github.com/mbbill/undotree.git
