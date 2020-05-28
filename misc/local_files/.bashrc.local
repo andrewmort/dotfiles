@@ -1,0 +1,12 @@
+# =============================================================================
+#
+# File: $HOME/.bashrc.local
+# By Andrew Mort
+#
+# Last modified: 10/31/2017
+#
+# =============================================================================
+
+export ASPBOX="/home/amort/aspbox"
+alias tmux="tmux -2"
+export DISPLAY="localhost:0.0"
