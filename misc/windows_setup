@@ -14,3 +14,24 @@ Install termainl emulator
 Update Ubuntu files
   sudo apt-get udpate
   sudo apt-get upgrade
+
+Shortcut to wsltty
+  Target: C:\Users\andre\AppData\Local\wsltty\bin\mintty.exe --WSL= --configdir="C:\Users\andre\AppData\Roaming\wsltty" -~ 
+  Start in: %USERPROFILE%
+
+Edit with Vim in Windows Explorer
+  https://nickjanetakis.com/blog/launching-wsl-programs-from-a-right-click-windows-menu
+  In registry
+    - Computer
+      - HKEY_CLASSES_ROOT
+        - *
+          - shell
+            - Vim
+                Value name: (Default)
+                  Value data: Edit with Vim
+                Value name: Icon
+                  Value data: C:\Users\andre\Pictures\vim.ico
+              - command
+                  Value name: (Default)
+                    Value data: C:\Users\andre\AppData\Local\wsltty\bin\mintty.exe --WSL= --configdir="C:\Users\andre\AppData\Roaming\wsltty" -t "%1" -e bash --login -c "vim \"$(wslpath '%1')\""
+
