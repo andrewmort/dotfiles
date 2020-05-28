@@ -19,6 +19,10 @@ Shortcut to wsltty
   Target: C:\Users\andre\AppData\Local\wsltty\bin\mintty.exe --WSL= --configdir="C:\Users\andre\AppData\Roaming\wsltty" -~ 
   Start in: %USERPROFILE%
 
+Copy/Paste with windows
+  - Install VcXsrv
+  - Add to startup programs
+
 Edit with Vim in Windows Explorer
   https://nickjanetakis.com/blog/launching-wsl-programs-from-a-right-click-windows-menu
   In registry
