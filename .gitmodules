@@ -54,3 +54,6 @@
 [submodule "vim/bundle/perforce"]
 	path = vim/bundle/perforce
 	url = https://github.com/vim-scripts/perforce.git
+[submodule "misc/mate-terminal-colors-solarized"]
+	path = misc/mate-terminal-colors-solarized
+	url = git@github.com:cledoux/mate-terminal-colors-solarized.git
