@@ -136,7 +136,7 @@ fi
 
 # see if dircolors exists, then set dircolors (used in ls)
 if hash dircolors 2> /dev/null; then
-   DIRCOLOR_DIR="${HOME}/.dircolors"
+   DIRCOLOR_DIR="${HOME}/.shell_dircolors"
 
    if [[ "${SHELL_COLOR}" == "SOLARIZED_DARK" ]] ; then
       DIRCOLOR_FILE="${DIRCOLOR_DIR}/dircolors.solarized-dark"

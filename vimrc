@@ -24,7 +24,7 @@ let g:pathogen_disabled = []
 call add(g:pathogen_disabled, 'PushPop.vim')
 call add(g:pathogen_disabled, 'ctrlp.vim')
 call add(g:pathogen_disabled, 'detectindent')
-call add(g:pathogen_disabled, 'indentLine')
+"call add(g:pathogen_disabled, 'indentLine')
 call add(g:pathogen_disabled, 'tagbar')
 
 " TODO: find plugin with less shell configuration
@@ -397,7 +397,8 @@ runtime bundle/perforce/perforce/perforceutils.vim
 nmap <F3> :NERDTreeToggle<CR>
 
 " map undotree plugin window to F4
-nmap <F4> :GundoToggle<cr>
+"nmap <F4> :GundoToggle<cr>
+nmap <F4> :UndotreeToggle<cr>
 
 " map spelling to F5
 nmap <F5> :setlocal spell! spelllang=en_us<CR>

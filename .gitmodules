@@ -57,3 +57,6 @@
 [submodule "misc/mate-terminal-colors-solarized"]
 	path = misc/mate-terminal-colors-solarized
 	url = git@github.com:cledoux/mate-terminal-colors-solarized.git
+[submodule "vim/bundle/undotree"]
+	path = vim/bundle/undotree
+	url = https://github.com/mbbill/undotree.git
