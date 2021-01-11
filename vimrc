@@ -206,6 +206,10 @@ nnoremap k gk
 " Enable support for % to jump between matching keywords (e.g. being:end)
 runtime macros/matchit.vim
 
+" Remove = and , from valid filenames for use with gf, add {} for path names
+set isfname-==
+set isfname-=,
+set isfname+={,}
 
 " -----------------------------------------------------------------------------
 " Color Settings
@@ -380,6 +384,12 @@ nmap <silent> <leader>dw :%s/\s\+$//e<CR>
 nmap <silent> <leader>dp :diffput<CR>
 nmap <silent> <leader>dg :diffget<CR>
 nmap <silent> <leader>du :diffupdate<CR>
+
+" perforce shortcuts for current file
+nmap <leader>pe :!p4 edit '%:p'<CR>
+nmap <leader>ps :!p4 submit '%:p'<CR>
+nmap <leader>pr :!p4 revert '%:p'<CR>
+nmap <leader>pu :!p4 sync '%:p'<CR>
 
 " add remove directory for stack
 if exists("loaded_pushpop")
