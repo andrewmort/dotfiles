@@ -1,0 +1,30 @@
+To setup new machine:
+  - Generate new ssh key
+    > ssh-keygen -t -rsa -b 4096 -C "you_email@example.com"
+    - Set file location to: /home/${USER}/.ssh/github_rsa
+    - Set passcode
+  - Add key to ssh-agent
+    > bash
+    > eval `ssh-agent -s`
+    > ssh-add ~/.ssh/github_rsa
+  - Add .pub key to github account
+    - go to github.com
+    - click on settings
+    - go to SSH and GPG keys
+    - Click New SSH key
+    - Give key a name
+    - Copy ~/.ssh/github_rsa.pub into key field
+  - Setup ssh config
+      -------- File: ~/.ssh/config --------
+
+      StrictHostKeyChecking no
+
+      Host github.com
+        IdentityFile ~/.ssh/github_rsa
+         Hostname ssh.github.com
+         Port 443
+         ForwardX11 no
+         ForwardAgent no
+      ------------------------------------
+  - Clone .dotfiles
+    > git clone git@github.com:andrewmort/dotfiles.git ~/.dotfiles
