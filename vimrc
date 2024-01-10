@@ -24,7 +24,7 @@ let g:pathogen_disabled = []
 call add(g:pathogen_disabled, 'PushPop.vim')
 call add(g:pathogen_disabled, 'ctrlp.vim')
 call add(g:pathogen_disabled, 'detectindent')
-call add(g:pathogen_disabled, 'indentLine')
+"call add(g:pathogen_disabled, 'indentLine')
 call add(g:pathogen_disabled, 'tagbar')
 
 " TODO: find plugin with less shell configuration
@@ -209,6 +209,10 @@ nnoremap k gk
 " Enable support for % to jump between matching keywords (e.g. being:end)
 runtime macros/matchit.vim
 
+" Remove = and , from valid filenames for use with gf, add {} for path names
+set isfname-==
+set isfname-=,
+set isfname+={,}
 
 " -----------------------------------------------------------------------------
 " Color Settings
@@ -384,6 +388,12 @@ nmap <silent> <leader>dp :diffput<CR>
 nmap <silent> <leader>dg :diffget<CR>
 nmap <silent> <leader>du :diffupdate<CR>
 
+" perforce shortcuts for current file
+nmap <leader>pe :!p4 edit '%:p'<CR>
+nmap <leader>ps :!p4 submit '%:p'<CR>
+nmap <leader>pr :!p4 revert '%:p'<CR>
+nmap <leader>pu :!p4 sync '%:p'<CR>
+
 " add remove directory for stack
 if exists("loaded_pushpop")
   nmap <silent> <leader>pushd :pushd %:p:h<CR>:pwd<CR>
@@ -397,7 +407,8 @@ endif
 nmap <F3> :NERDTreeToggle<CR>
 
 " map undotree plugin window to F4
-nmap <F4> :GundoToggle<cr>
+"nmap <F4> :GundoToggle<cr>
+nmap <F4> :UndotreeToggle<cr>
 
 " map spelling to F5
 nmap <F5> :setlocal spell! spelllang=en_us<CR>

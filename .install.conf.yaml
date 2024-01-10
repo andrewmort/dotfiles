@@ -19,8 +19,10 @@
     ~/.bashrc.user:
     ~/.cshrc: 
     ~/.cshrc.user:
-    ~/.dircolors:
+    #~/.dircolors:
     #~/.dircolors: misc/dircolors-solarized/dircolors.ansi-dark
+    ~/.shell_dircolors: dircolors
     ~/.bash_profile:
+    ~/.tmux.conf:
 
 

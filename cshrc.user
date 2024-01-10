@@ -158,7 +158,7 @@ which dircolors >& /dev/null
 
 # set dircolors (used in ls)
 if ($? == 0) then
-  set DIRCOLOR_DIR = "${HOME}/.dircolors"
+  set DIRCOLOR_DIR = "${HOME}/.shell_dircolors"
 
   if ("${SHELL_COLOR}" == "SOLARIZED_DARK") then
     set DIRCOLOR_FILE = "${DIRCOLOR_DIR}/dircolors.solarized-dark"
