@@ -37,6 +37,9 @@ if [ $machine == "mac" ]; then
       # Add brew coreutils to path to override bsd versions with OSX
       PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 
+      # Add brew conda path
+      PATH="/usr/local/anaconda3/bin:$PATH"
+
       MANPATH="$(brew --prefix coreutils)/libexec/gnuman:${MANPATH}"
       MANPATH="/usr/local/share/man:${MANPATH}"
       export MANPATH=$MANPATH
