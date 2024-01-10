@@ -87,6 +87,9 @@ set t_vb=
 " highlight current line
 set cursorline
 
+" always underline spelling issues
+hi SpellBad cterm=underline
+
 " enable relative line numbers
 set number relativenumber
 
